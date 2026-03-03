@@ -344,3 +344,26 @@ This occurs because pre-release charts may use floating version tags (like `:3`)
 - Environment variables are now better organized and integrated into the chart structure
 
 For more detailed information, please refer to the [official Langfuse documentation](https://langfuse.com/docs). 
+
+
+## ClickHouse dependency migration (Bitnami -> ClickHouse)
+
+Starting with chart `1.5.22`, the ClickHouse dependency is migrated from Bitnami to the ClickHouse-maintained chart.
+
+### What changed
+
+- Dependency repository changed from `oci://registry-1.docker.io/bitnamicharts` to `oci://ghcr.io/clickhouse/charts`.
+- Default ClickHouse image repository changed from `bitnamilegacy/clickhouse` to `clickhouse/clickhouse-server`.
+- Added `clickhouse.serviceName` to explicitly override the in-cluster ClickHouse service DNS name when `clickhouse.deploy=true`.
+
+### Compatibility
+
+- Existing top-level Langfuse values (`clickhouse.host`, `clickhouse.auth.*`, `clickhouse.httpPort`, `clickhouse.nativePort`) continue to work.
+- External ClickHouse mode (`clickhouse.deploy=false`) is unchanged.
+- `clickhouse.resourcesPreset` and `clickhouse.zookeeper` remain as deprecated compatibility fields.
+
+### Recommended actions
+
+1. If you relied on Bitnami-specific ClickHouse/ZooKeeper subchart settings, review and migrate them to the new subchart equivalents.
+2. If your in-cluster ClickHouse service name differs from the default (`<release>-clickhouse`), set `clickhouse.serviceName` explicitly.
+3. Keep `clickhouse.shards=1` because Langfuse does not support ClickHouse sharding.

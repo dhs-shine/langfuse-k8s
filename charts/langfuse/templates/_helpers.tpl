@@ -96,7 +96,11 @@ Return ClickHouse hostname (without protocol)
 {{- .Values.clickhouse.host -}}
 {{- end -}}
 {{- else if .Values.clickhouse.deploy }}
+{{- if .Values.clickhouse.serviceName -}}
+{{- .Values.clickhouse.serviceName -}}
+{{- else -}}
 {{- printf "%s-clickhouse" (include "langfuse.fullname" .) -}}
+{{- end -}}
 {{- end }}
 {{- end }}
 
