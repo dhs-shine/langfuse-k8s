@@ -504,11 +504,13 @@ redis:
 
 # ClickHouse Configuration
 clickhouse:
-  # -- Enable ClickHouse deployment (via Bitnami Helm Chart). If you want to use an external Clickhouse server (or a managed one), set this to false
+  # -- Enable ClickHouse deployment (via ClickHouse Helm Chart). If you want to use an external Clickhouse server (or a managed one), set this to false
   deploy: true
 
   # -- ClickHouse host to connect to. If clickhouse.deploy is true, this will be set automatically based on the release name.
   host: ""
+  # -- Optional override for the ClickHouse service DNS name when clickhouse.deploy is true.
+  serviceName: ""
   # -- ClickHouse HTTP port to connect to.
   httpPort: 8123
   # -- ClickHouse native port to connect to.
@@ -517,15 +519,13 @@ clickhouse:
   database: default
 
   image:
-    # -- Overwrite default repository of helm chart to point to non-paid bitnami images.
-    repository: bitnamilegacy/clickhouse
-    #  image: docker.io/bitnami/clickhouse:25.2.1-debian-12-r0
+    # -- ClickHouse image repository used by the ClickHouse subchart.
+    repository: clickhouse/clickhouse-server
+    # -- Optional image tag override used by the ClickHouse subchart.
+    tag: ""
 
-  zookeeper:
-    image:
-      # -- Overwrite default repository of helm chart to point to non-paid bitnami images.
-      repository: bitnamilegacy/zookeeper
-      # image: docker.io/bitnami/zookeeper:3.9.3-debian-12-r8
+  # -- Deprecated. Kept for backward compatibility with Bitnami ClickHouse values.
+  zookeeper: {}
 
   # Authentication configuration
   auth:
@@ -554,8 +554,8 @@ clickhouse:
   shards: 1 # Fixed - Langfuse does not support sharding
   # -- Number of replicas to use for the ClickHouse cluster. 1 corresponds to a single, non-HA deployment.
   replicaCount: 3
-  # -- The resources preset to use for the ClickHouse cluster.
-  resourcesPreset: 2xlarge
+  # -- Deprecated. Kept for backward compatibility with Bitnami ClickHouse values.
+  resourcesPreset: ""
 
 # S3/MinIO Configuration
 s3:

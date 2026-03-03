@@ -1,6 +1,6 @@
 # langfuse
 
-![Version: 1.5.21](https://img.shields.io/badge/Version-1.5.21-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.155.0](https://img.shields.io/badge/AppVersion-3.155.0-informational?style=flat-square)
+![Version: 1.5.22](https://img.shields.io/badge/Version-1.5.22-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.155.0](https://img.shields.io/badge/AppVersion-3.155.0-informational?style=flat-square)
 
 Open source LLM engineering platform - LLM observability, metrics, evaluations, prompt management.
 
@@ -21,7 +21,7 @@ Open source LLM engineering platform - LLM observability, metrics, evaluations, 
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://registry-1.docker.io/bitnamicharts | clickhouse | 8.0.5 |
+| oci://ghcr.io/clickhouse/charts | clickhouse | 0.1.3 |
 | oci://registry-1.docker.io/bitnamicharts | common | 2.30.0 |
 | oci://registry-1.docker.io/bitnamicharts | s3(minio) | 14.10.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 16.4.9 |
@@ -37,18 +37,20 @@ Open source LLM engineering platform - LLM observability, metrics, evaluations, 
 | clickhouse.auth.username | string | `"default"` | Username for the ClickHouse user. |
 | clickhouse.clusterEnabled | bool | `true` | Whether to run ClickHouse commands ON CLUSTER. Controls CLICKHOUSE_CLUSTER_ENABLED setting. |
 | clickhouse.database | string | `"default"` | ClickHouse database to use. |
-| clickhouse.deploy | bool | `true` | Enable ClickHouse deployment (via Bitnami Helm Chart). If you want to use an external Clickhouse server (or a managed one), set this to false |
+| clickhouse.deploy | bool | `true` | Enable ClickHouse deployment (via ClickHouse Helm Chart). If you want to use an external Clickhouse server (or a managed one), set this to false |
 | clickhouse.host | string | `""` | ClickHouse host to connect to. If clickhouse.deploy is true, this will be set automatically based on the release name. |
 | clickhouse.httpPort | int | `8123` | ClickHouse HTTP port to connect to. |
-| clickhouse.image.repository | string | `"bitnamilegacy/clickhouse"` | Overwrite default repository of helm chart to point to non-paid bitnami images. |
+| clickhouse.image.repository | string | `"clickhouse/clickhouse-server"` | ClickHouse image repository used by the ClickHouse subchart. |
+| clickhouse.image.tag | string | `""` | Optional image tag override used by the ClickHouse subchart. |
 | clickhouse.migration.autoMigrate | bool | `true` | Whether to run automatic ClickHouse migrations on startup |
 | clickhouse.migration.ssl | bool | `false` | Set to true to establish SSL connection for migration |
 | clickhouse.migration.url | string | `""` | Migration URL (TCP protocol) for clickhouse |
 | clickhouse.nativePort | int | `9000` | ClickHouse native port to connect to. |
 | clickhouse.replicaCount | int | `3` | Number of replicas to use for the ClickHouse cluster. 1 corresponds to a single, non-HA deployment. |
-| clickhouse.resourcesPreset | string | `"2xlarge"` | The resources preset to use for the ClickHouse cluster. |
+| clickhouse.resourcesPreset | string | `""` | Deprecated. Kept for backward compatibility with Bitnami ClickHouse values. |
+| clickhouse.serviceName | string | `""` | Optional override for the ClickHouse service DNS name when clickhouse.deploy is true. |
 | clickhouse.shards | int | `1` | Subchart specific settings |
-| clickhouse.zookeeper.image.repository | string | `"bitnamilegacy/zookeeper"` | Overwrite default repository of helm chart to point to non-paid bitnami images. |
+| clickhouse.zookeeper | object | `{}` | Deprecated. Kept for backward compatibility with Bitnami ClickHouse values. |
 | extraManifests | list | `[]` |  |
 | fullnameOverride | string | `""` | Override the full name of the deployed resources, defaults to a combination of the release name and the name for the selector labels |
 | global.security.allowInsecureImages | bool | `true` | Allow insecure images to use bitnami legacy repository. Can be set to false if secure images are being used (Paid). |
